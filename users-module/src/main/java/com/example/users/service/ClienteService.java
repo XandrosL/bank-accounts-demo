@@ -29,7 +29,7 @@ public class ClienteService {
 		return repository.findAll(PageRequest.of(page, size, sort));
 	}
 
-	public Cliente findById(Integer clienteId) {
+	public Cliente findById(Long clienteId) {
 		return repository.findById(clienteId)
 				.orElseThrow(() -> new ResourceNotFoundException(CLIENTE_NO_ENCONTRADO_O_ID_INVALIDO));
 	}
@@ -47,7 +47,7 @@ public class ClienteService {
 		return repository.save(cliente);
 	}
 
-	public Cliente replaceById(Integer clienteId, Cliente cliente) {
+	public Cliente replaceById(Long clienteId, Cliente cliente) {
 		if (cliente == null) {
 			throw new IllegalArgumentException(CLIENTE_INVALIDO);
 		}
@@ -63,7 +63,7 @@ public class ClienteService {
 		return repository.save(cliente);
 	}
 
-	public Cliente modifyById(Integer clienteId, Cliente cliente) {
+	public Cliente modifyById(Long clienteId, Cliente cliente) {
 		if (cliente == null) {
 			throw new IllegalArgumentException(CLIENTE_INVALIDO);
 		}
@@ -83,7 +83,7 @@ public class ClienteService {
 		return repository.save(oldCliente);
 	}
 
-	public void deleteById(Integer clienteId) {
+	public void deleteById(Long clienteId) {
 		if (!repository.existsById(clienteId)) {
 			throw new ResourceNotFoundException(CLIENTE_NO_ENCONTRADO_O_ID_INVALIDO);
 		}

@@ -38,7 +38,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{clienteId}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable("clienteId") Integer clienteId) {
+	public ResponseEntity<Cliente> getClienteById(@PathVariable("clienteId") Long clienteId) {
 		return new ResponseEntity<>(service.findById(clienteId), HttpStatus.OK);
 	}
 
@@ -56,7 +56,7 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{clienteId}")
-	public ResponseEntity<Cliente> putClienteById(@PathVariable("clienteId") Integer clienteId,
+	public ResponseEntity<Cliente> putClienteById(@PathVariable("clienteId") Long clienteId,
 			@RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.replaceById(clienteId, cliente), HttpStatus.OK);
 	}
@@ -68,7 +68,7 @@ public class ClienteController {
 	}
 
 	@PatchMapping("/{clienteId}")
-	public ResponseEntity<Cliente> patchClienteById(@PathVariable("clienteId") Integer clienteId,
+	public ResponseEntity<Cliente> patchClienteById(@PathVariable("clienteId") Long clienteId,
 			@RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyById(clienteId, cliente), HttpStatus.OK);
 	}
@@ -80,7 +80,7 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/{clienteId}")
-	public ResponseEntity<Cliente> deleteClienteById(@PathVariable("clienteId") Integer clienteId) {
+	public ResponseEntity<Cliente> deleteClienteById(@PathVariable("clienteId") Long clienteId) {
 		service.deleteById(clienteId);
 		return ResponseEntity.noContent().build();
 	}

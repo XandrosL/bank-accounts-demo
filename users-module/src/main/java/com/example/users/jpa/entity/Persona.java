@@ -2,15 +2,29 @@ package com.example.users.jpa.entity;
 
 import java.util.Arrays;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public class Persona {
+	@NotBlank(message = "El campo Nombre es obligatorio")
+	@Column(nullable = false)
 	private String nombre;
+	@NotBlank(message = "El campo Genero es obligatorio")
+	@Column(nullable = false)
 	private Genero genero;
+	@NotBlank(message = "El campo Edad es obligatorio")
+	@Column(nullable = false)
 	private Integer edad;
+	@NotBlank(message = "El campo ContIdentificación es obligatorio")
+	@Column(nullable = false)
 	private Integer identificacion;
+	@NotBlank(message = "El campo Dirección es obligatorio")
+	@Column(nullable = false)
 	private String direccion;
+	@NotBlank(message = "El campo Telefono es obligatorio")
+	@Column(nullable = false)
 	private Integer telefono;
 
 	public enum Genero {
