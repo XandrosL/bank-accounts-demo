@@ -48,7 +48,7 @@ public class CuentaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cuenta> postCuenta(@RequestBody(required = false) Cuenta cuenta) {
+	public ResponseEntity<Cuenta> postCuenta(@RequestBody Cuenta cuenta) {
 		Cuenta createdCuenta = service.create(cuenta);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cuentaId}")
 				.buildAndExpand(createdCuenta.getCuentaId()).toUri();

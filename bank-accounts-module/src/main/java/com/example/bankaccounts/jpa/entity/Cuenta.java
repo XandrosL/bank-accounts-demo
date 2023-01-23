@@ -3,6 +3,7 @@ package com.example.bankaccounts.jpa.entity;
 import java.util.Arrays;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -34,6 +35,7 @@ public class Cuenta {
 	@Column(nullable = false)
 	private Boolean estado;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cuentaId")
 	private Set<Movimiento> movimientos;
 

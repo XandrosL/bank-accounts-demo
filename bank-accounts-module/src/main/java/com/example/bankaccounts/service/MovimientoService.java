@@ -22,11 +22,12 @@ import com.example.bankaccounts.utils.BankAccountsUtils;
 @Service
 public class MovimientoService {
 
+	private static final String SALDO_NO_DISPONIBLE = "Saldo no disponible";
+	private static final String MOVIMIENTO_INVALIDO = "Movimiento inválido";
 	private static final String MOVIMIENTO_NO_ENCONTRADO_O_ID_INVALIDO = "Movimiento no encontrado o ID inválido";
 	private static final String NO_HAY_MOVIMIENTOS_O_ID_DE_CUENTA_INVALIDO = "No hay movimientos o ID de cuenta inválido";
-	private static final String MOVIMIENTO_INVALIDO = "Movimiento inválido";
 	private static final String DEBE_SER_EL_MOVIMIENTO_MAS_RECIENTE_DE_UNA_CUENTA = "Solo se permite modificar o eliminar el movimiento más reciente de una cuenta";
-	private static final String SALDO_NO_DISPONIBLE = "Saldo no disponible";
+	private static final String CUENTA_INACTIVA = "Cuenta en estado Inactiva";
 
 	@Autowired
 	private MovimientoRepository movimientoRepository;
@@ -49,6 +50,15 @@ public class MovimientoService {
 		return movimientoRepository.findAllByCuentaId(cuentaId, PageRequest.of(page, size, sort));
 	}
 
+	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size) {
+		return findAllByNumeroCuenta(numeroCuenta, page, size, null);
+	}
+
+	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size, Sort sort) {
+		return movimientoRepository.findAllByCuentaId(cuentaService.findByNumeroCuenta(numeroCuenta).getCuentaId(),
+				PageRequest.of(page, size, sort));
+	}
+
 	public Movimiento findById(Long movimientoId) {
 		return movimientoRepository.findById(movimientoId)
 				.orElseThrow(() -> new ResourceNotFoundException(MOVIMIENTO_NO_ENCONTRADO_O_ID_INVALIDO));
@@ -60,6 +70,7 @@ public class MovimientoService {
 			throw new IllegalArgumentException(MOVIMIENTO_INVALIDO);
 		}
 		movimiento.setMovimientoId(null);
+		validateCuentaEstado(movimiento);
 		setCalculatedSaldo(movimiento);
 		return movimientoRepository.save(movimiento);
 	}
@@ -69,6 +80,8 @@ public class MovimientoService {
 		if (movimiento == null) {
 			throw new IllegalArgumentException(MOVIMIENTO_INVALIDO);
 		}
+		validateCuentaEstado(movimiento);
+		movimiento.getCuentaId();
 		Movimiento oldMovimiento = findById(movimientoId);
 		Movimiento latest = findLatestByCuentaId(oldMovimiento.getCuentaId())
 				.orElseThrow(() -> new ResourceNotFoundException(NO_HAY_MOVIMIENTOS_O_ID_DE_CUENTA_INVALIDO));
@@ -84,6 +97,7 @@ public class MovimientoService {
 		if (movimiento == null) {
 			throw new IllegalArgumentException(MOVIMIENTO_INVALIDO);
 		}
+		validateCuentaEstado(movimiento);
 		Movimiento oldMovimiento = findById(movimientoId);
 		Movimiento latest = findLatestByCuentaId(oldMovimiento.getCuentaId())
 				.orElseThrow(() -> new ResourceNotFoundException(NO_HAY_MOVIMIENTOS_O_ID_DE_CUENTA_INVALIDO));
@@ -138,6 +152,12 @@ public class MovimientoService {
 			movimiento.setSaldo(saldo - valor);
 		} else {
 			throw new IllegalArgumentException(SALDO_NO_DISPONIBLE);
+		}
+	}
+	
+	private void validateCuentaEstado(Movimiento movimiento) {
+		if (Boolean.FALSE.equals(cuentaService.findById(movimiento.getCuentaId()).getEstado())) {
+			throw new IllegalArgumentException(CUENTA_INACTIVA);
 		}
 	}
 }
