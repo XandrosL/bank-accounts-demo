@@ -71,13 +71,13 @@ public class ClienteController {
 
 	@PatchMapping("/{clienteId}")
 	public ResponseEntity<Cliente> patchClienteById(@PathVariable("clienteId") Long clienteId,
-			@Valid @RequestBody Cliente cliente) {
+			@RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyById(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PatchMapping("/identificacion/{identificacion}")
 	public ResponseEntity<Cliente> patchClienteByIdentificacion(@PathVariable("identificacion") Integer identificacion,
-			@Valid @RequestBody Cliente cliente) {
+			@RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyByIdentificacion(identificacion, cliente), HttpStatus.OK);
 	}
 

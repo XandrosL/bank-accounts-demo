@@ -70,14 +70,13 @@ public class CuentaController {
 	}
 
 	@PatchMapping("/{cuentaId}")
-	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId,
-			@Valid @RequestBody Cuenta cuenta) {
+	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId, @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyById(cuentaId, cuenta), HttpStatus.OK);
 	}
 
 	@PatchMapping("/numero-cuenta/{numeroCuenta}")
 	public ResponseEntity<Cuenta> patchClienteByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
-			@Valid @RequestBody Cuenta cuenta) {
+			@RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
 

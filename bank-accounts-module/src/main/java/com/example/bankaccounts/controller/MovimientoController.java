@@ -70,7 +70,7 @@ public class MovimientoController {
 
 	@PatchMapping("/{movimientoId}")
 	public ResponseEntity<Movimiento> patchMovimientoById(@PathVariable("movimientoId") Long movimientoId,
-			@Valid @RequestBody Movimiento movimiento) {
+			@RequestBody Movimiento movimiento) {
 		return new ResponseEntity<>(service.modifyById(movimientoId, movimiento), HttpStatus.OK);
 	}
 

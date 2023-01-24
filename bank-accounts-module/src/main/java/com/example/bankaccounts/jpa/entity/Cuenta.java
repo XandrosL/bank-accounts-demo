@@ -24,9 +24,10 @@ public class Cuenta {
 	@NotNull(message = "El campo ClienteId es obligatorio")
 	@Column(nullable = false)
 	private Long clienteId;
-
+	// TODO Generar NumeroCuenta por secuencia de BD. JPA/Hibernate no poseen
+	// funcionalidad nativa, se debe especifar el DDL
+	@NotNull(message = "El campo NumeroCuenta es obligatorio")
 	@Column(nullable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer numeroCuenta;
 	@NotNull(message = "El campo TipoCuenta es obligatorio")
 	@Column(nullable = false)

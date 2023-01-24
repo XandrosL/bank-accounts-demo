@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "08f66519-8b66-4bf3-9374-d3e5668346e9",
+		"_postman_id": "6f38dbdb-53e1-40d2-93a9-3eb480fd9b90",
 		"name": "BankAccountsDemo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "10743069"
@@ -10,193 +10,358 @@
 			"name": "users-module",
 			"item": [
 				{
-					"name": "GET Clientes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes?page=0&size=20&details=false",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
+					"name": "/clientes",
+					"item": [
+						{
+							"name": "GET Clientes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes?page=0&size=20&details=false",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Clientes (detalles de paginación)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes?page=0&size=20&details=true",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cliente By clienteId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cliente By clienteId (Id Inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cliente By identificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/identificacion/987654321",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"identificacion",
+										"987654321"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cliente By identificacion (identificación inválida)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/identificacion/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"identificacion",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cliente",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"533426\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba POST\",\n    \"edad\": 49,\n    \"genero\": \"M\",\n    \"identificacion\": 43256674,\n    \"direccion\": \"Quito\",\n    \"telefono\": 999999999\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "size",
-									"value": "20"
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cliente (campos inválidos)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"87642\",\n    \"estado\": true,\n    \"edad\": 49,\n    \"direccion\": \"Quito\",\n    \"telefono\": 999999999\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "details",
-									"value": "false"
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes"
+									]
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Cliente By clienteId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Cliente By identificacion",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/identificacion/123456",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes",
-								"identificacion",
-								"123456"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "POST Cliente",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 29,\n    \"genero\": \"M\",\n    \"identificacion\": 123456,\n    \"direccion\": \"Quito\",\n    \"telefono\": 999999999\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Cliente",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 30,\n    \"identificacion\": 123456,\n    \"direccion\": \"Quito\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "PUT Cliente",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 30,\n    \"genero\": \"M\",\n    \"identificacion\": 123456,\n    \"direccion\": \"Cuenca\",\n    \"telefono\": 88888888\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PATCH Cliente",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"clienteId\":3,\n    \"contraseña\":\"654321\",\n    \"direccion\":\"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "PUT Cliente (campos inválidos)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 30,\n    \"identificacion\": 123456,\n    \"direccion\": \"Quito\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Cliente",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 32,\n    \"identificacion\": 123456,\n    \"Telefono\": 999999999\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "PATCH Cliente",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\":\"654321\",\n    \"direccion\":\"Test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
-							"host": [
-								"{{servidor}}"
-							],
-							"port": "{{puerto-users-module}}",
-							"path": [
-								"api",
-								"clientes",
-								"1"
-							]
+						{
+							"name": "PATCH Cliente (dirección inválida)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\":\"654321\",\n    \"direccion\":\"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Cliente",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 32,\n    \"identificacion\": 123456,\n    \"Telefono\": 999999999\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/2",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"2"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -204,12 +369,106 @@
 			"name": "bank-accounts-module",
 			"item": [
 				{
-					"name": "GET Cuentas",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
+					"name": "/cuentas",
+					"item": [
+						{
+							"name": "GET Cuentas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas?page=0&size=20&details=false",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cuenta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 1,\n    \"numeroCuenta\": 1001000,\n    \"tipoCuenta\": \"A\",\n    \"saldoInicial\": 777.7,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Cuenta (campos inválidos)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 1,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/movimientos",
+					"item": []
+				},
+				{
+					"name": "/reportes",
+					"item": []
 				}
 			]
 		}

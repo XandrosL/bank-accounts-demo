@@ -16,19 +16,34 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.users.exception.ResourceNotFoundException;
 
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class UsersExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ IllegalArgumentException.class, ResourceNotFoundException.class })
-	protected ResponseEntity<Object> handleException(RuntimeException e, WebRequest request) {
+	protected ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-		if (e instanceof IllegalArgumentException) {
+		if (ex instanceof IllegalArgumentException) {
 			statusCode = HttpStatus.BAD_REQUEST;
-		} else if (e instanceof ResourceNotFoundException) {
+		} else if (ex instanceof ResourceNotFoundException) {
 			statusCode = HttpStatus.NOT_FOUND;
 		}
-		return handleExceptionInternal(e, e.getLocalizedMessage(), headers, statusCode, request);
+		return handleExceptionInternal(ex, ex.getLocalizedMessage(), headers, statusCode, request);
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	protected ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex, WebRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus statusCode = HttpStatus.BAD_REQUEST;
+		Map<String, String> errors = new HashMap<>();
+		ex.getConstraintViolations().forEach(error -> {
+			String fieldName = error.getPropertyPath().toString();
+			String errorMessage = error.getMessage();
+			errors.put(fieldName, errorMessage);
+		});
+		return handleExceptionInternal(ex, errors, headers, statusCode, request);
 	}
 
 	@Override
