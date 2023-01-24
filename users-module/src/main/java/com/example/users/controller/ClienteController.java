@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,12 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.users.jpa.entity.Cliente;
 import com.example.users.service.ClienteService;
 
-@Controller
+import jakarta.validation.Valid;
+
+@RestController
 @RequestMapping(path = "/clientes")
 public class ClienteController {
 
@@ -48,7 +50,7 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> postCliente(@RequestBody(required = false) Cliente cliente) {
+	public ResponseEntity<Cliente> postCliente(@Valid @RequestBody(required = false) Cliente cliente) {
 		Cliente createdCliente = service.create(cliente);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{clienteId}")
 				.buildAndExpand(createdCliente.getClienteId()).toUri();
@@ -57,25 +59,25 @@ public class ClienteController {
 
 	@PutMapping("/{clienteId}")
 	public ResponseEntity<Cliente> putClienteById(@PathVariable("clienteId") Long clienteId,
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.replaceById(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PutMapping("/identificacion/{identificacion}")
 	public ResponseEntity<Cliente> putClienteByIdentificacion(@PathVariable("identificacion") Integer clienteId,
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.replaceByIdentificacion(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PatchMapping("/{clienteId}")
 	public ResponseEntity<Cliente> patchClienteById(@PathVariable("clienteId") Long clienteId,
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyById(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PatchMapping("/identificacion/{identificacion}")
 	public ResponseEntity<Cliente> patchClienteByIdentificacion(@PathVariable("identificacion") Integer identificacion,
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyByIdentificacion(identificacion, cliente), HttpStatus.OK);
 	}
 

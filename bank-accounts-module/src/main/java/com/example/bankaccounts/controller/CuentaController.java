@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,12 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.bankaccounts.jpa.entity.Cuenta;
 import com.example.bankaccounts.service.CuentaService;
 
-@Controller
+import jakarta.validation.Valid;
+
+@RestController
 @RequestMapping(path = "/cuentas")
 public class CuentaController {
 
@@ -48,7 +50,7 @@ public class CuentaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cuenta> postCuenta(@RequestBody Cuenta cuenta) {
+	public ResponseEntity<Cuenta> postCuenta(@Valid @RequestBody Cuenta cuenta) {
 		Cuenta createdCuenta = service.create(cuenta);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cuentaId}")
 				.buildAndExpand(createdCuenta.getCuentaId()).toUri();
@@ -56,24 +58,26 @@ public class CuentaController {
 	}
 
 	@PutMapping("/{cuentaId}")
-	public ResponseEntity<Cuenta> putCuentaById(@PathVariable("cuentaId") Long cuentaId, @RequestBody Cuenta cuenta) {
+	public ResponseEntity<Cuenta> putCuentaById(@PathVariable("cuentaId") Long cuentaId,
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.replaceById(cuentaId, cuenta), HttpStatus.OK);
 	}
 
 	@PutMapping("/numero-cuenta/{numeroCuenta}")
 	public ResponseEntity<Cuenta> putCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
-			@RequestBody Cuenta cuenta) {
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.replaceByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
 
 	@PatchMapping("/{cuentaId}")
-	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId, @RequestBody Cuenta cuenta) {
+	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId,
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyById(cuentaId, cuenta), HttpStatus.OK);
 	}
 
 	@PatchMapping("/numero-cuenta/{numeroCuenta}")
 	public ResponseEntity<Cuenta> patchClienteByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
-			@RequestBody Cuenta cuenta) {
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
 

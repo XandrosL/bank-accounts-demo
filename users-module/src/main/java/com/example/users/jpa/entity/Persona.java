@@ -18,7 +18,7 @@ public class Persona {
 	@NotNull(message = "El campo Edad es obligatorio")
 	@Column(nullable = false)
 	private Integer edad;
-	@NotNull(message = "El campo ContIdentificación es obligatorio")
+	@NotNull(message = "El campo Identificación es obligatorio")
 	@Column(nullable = false, unique = true)
 	private Integer identificacion;
 	@NotBlank(message = "El campo Dirección es obligatorio")
