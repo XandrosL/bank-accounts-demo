@@ -63,7 +63,7 @@ public class CuentaService {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
-		cuenta.setCuentaId(null);
+		setDefaultValues(cuenta);
 		validateClienteEstado(cuenta);
 		return repository.save(cuenta);
 	}
@@ -72,7 +72,7 @@ public class CuentaService {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
-		cuenta.setCuentaId(findById(cuentaId).getCuentaId());
+		setDefaultValues(cuenta, findById(cuentaId).getCuentaId());
 		validateClienteEstado(cuenta);
 		return repository.save(cuenta);
 	}
@@ -81,7 +81,7 @@ public class CuentaService {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
-		cuenta.setCuentaId(findByNumeroCuenta(numeroCuenta).getCuentaId());
+		setDefaultValues(cuenta, findByNumeroCuenta(numeroCuenta).getCuentaId());
 		validateClienteEstado(cuenta);
 		return repository.save(cuenta);
 	}
@@ -120,6 +120,20 @@ public class CuentaService {
 			throw new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_NUMERO_DE_CUENTA_INVALIDO);
 		}
 		repository.deleteByNumeroCuenta(numeroCuenta);
+	}
+
+	private void setDefaultValues(Cuenta cuenta) {
+		setDefaultValues(cuenta, null);
+	}
+
+	private void setDefaultValues(Cuenta cuenta, Long cuentaId) {
+		cuenta.setCuentaId(cuentaId);
+		if (cuenta.getEstado() == null) {
+			cuenta.setEstado(false);
+		}
+		if (cuenta.getSaldoInicial() == null) {
+			cuenta.setSaldoInicial(0.0);
+		}
 	}
 
 	private ClienteDTO getCliente(Cuenta cuenta) {

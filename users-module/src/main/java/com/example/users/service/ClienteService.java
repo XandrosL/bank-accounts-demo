@@ -43,7 +43,7 @@ public class ClienteService {
 		if (cliente == null) {
 			throw new IllegalArgumentException(CLIENTE_INVALIDO);
 		}
-		cliente.setClienteId(null);
+		setDefaultValues(cliente);
 		return repository.save(cliente);
 	}
 
@@ -51,7 +51,7 @@ public class ClienteService {
 		if (cliente == null) {
 			throw new IllegalArgumentException(CLIENTE_INVALIDO);
 		}
-		cliente.setClienteId(findById(clienteId).getClienteId());
+		setDefaultValues(cliente, findById(clienteId).getClienteId());
 		return repository.save(cliente);
 	}
 
@@ -59,7 +59,7 @@ public class ClienteService {
 		if (cliente == null) {
 			throw new IllegalArgumentException(CLIENTE_INVALIDO);
 		}
-		cliente.setClienteId(findByIdentificacion(identificacion).getClienteId());
+		setDefaultValues(cliente, findByIdentificacion(identificacion).getClienteId());
 		return repository.save(cliente);
 	}
 
@@ -95,5 +95,16 @@ public class ClienteService {
 			throw new ResourceNotFoundException(CLIENTE_NO_ENCONTRADO_O_IDENTIFICACION_INVALIDA);
 		}
 		repository.deleteByIdentificacion(identificacion);
+	}
+
+	private void setDefaultValues(Cliente cliente) {
+		setDefaultValues(cliente, null);
+	}
+
+	private void setDefaultValues(Cliente cliente, Long clienteId) {
+		cliente.setClienteId(clienteId);
+		if (cliente.getEstado() == null) {
+			cliente.setEstado(true);
+		}
 	}
 }

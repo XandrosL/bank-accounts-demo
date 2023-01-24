@@ -5,25 +5,26 @@ import java.util.Arrays;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @MappedSuperclass
 public class Persona {
 	@NotBlank(message = "El campo Nombre es obligatorio")
 	@Column(nullable = false)
 	private String nombre;
-	@NotBlank(message = "El campo Genero es obligatorio")
+	@NotNull(message = "El campo Genero es obligatorio")
 	@Column(nullable = false)
 	private Genero genero;
-	@NotBlank(message = "El campo Edad es obligatorio")
+	@NotNull(message = "El campo Edad es obligatorio")
 	@Column(nullable = false)
 	private Integer edad;
-	@NotBlank(message = "El campo ContIdentificación es obligatorio")
-	@Column(nullable = false)
+	@NotNull(message = "El campo ContIdentificación es obligatorio")
+	@Column(nullable = false, unique = true)
 	private Integer identificacion;
 	@NotBlank(message = "El campo Dirección es obligatorio")
 	@Column(nullable = false)
 	private String direccion;
-	@NotBlank(message = "El campo Telefono es obligatorio")
+	@NotNull(message = "El campo Telefono es obligatorio")
 	@Column(nullable = false)
 	private Integer telefono;
 

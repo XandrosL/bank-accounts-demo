@@ -12,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Cuenta {
@@ -21,13 +21,14 @@ public class Cuenta {
 	@JsonProperty(index = 0)
 	private Long cuentaId;
 
-	@NotBlank(message = "El campo ClienteId es obligatorio")
+	@NotNull(message = "El campo ClienteId es obligatorio")
 	@Column(nullable = false)
 	private Long clienteId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer numeroCuenta;
-	@NotBlank(message = "El campo TipoCuenta es obligatorio")
+	@NotNull(message = "El campo TipoCuenta es obligatorio")
 	@Column(nullable = false)
 	private TipoCuenta tipoCuenta;
 	@Column(nullable = false)

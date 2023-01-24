@@ -74,9 +74,9 @@ public class MovimientoService {
 		if (movimiento == null) {
 			throw new IllegalArgumentException(MOVIMIENTO_INVALIDO);
 		}
-		movimiento.setMovimientoId(null);
+		setDefaultValues(movimiento);
 		validateCuentaEstado(movimiento);
-		setCalculatedSaldo(movimiento);
+		updateSaldo(movimiento);
 		return movimientoRepository.save(movimiento);
 	}
 
@@ -86,16 +86,15 @@ public class MovimientoService {
 			throw new IllegalArgumentException(MOVIMIENTO_INVALIDO);
 		}
 		validateCuentaEstado(movimiento);
-		movimiento.getCuentaId();
 		Movimiento oldMovimiento = findById(movimientoId);
 		Movimiento latest = findLatestByCuentaId(oldMovimiento.getCuentaId())
 				.orElseThrow(() -> new ResourceNotFoundException(NO_HAY_MOVIMIENTOS_O_ID_DE_CUENTA_INVALIDO));
 		if (!latest.getMovimientoId().equals(movimientoId)) {
 			throw new ForbiddenOperationException(DEBE_SER_EL_MOVIMIENTO_MAS_RECIENTE_DE_UNA_CUENTA);
 		}
-		movimiento.setMovimientoId(oldMovimiento.getMovimientoId());
-		setCalculatedSaldo(movimiento, true);
-		return movimientoRepository.save(oldMovimiento);
+		setDefaultValues(movimiento, oldMovimiento.getMovimientoId());
+		updateSaldo(movimiento, true);
+		return movimientoRepository.save(movimiento);
 	}
 
 	public Movimiento modifyById(Long movimientoId, Movimiento movimiento) {
@@ -111,7 +110,7 @@ public class MovimientoService {
 		}
 		movimiento.setMovimientoId(null);
 		BankAccountsUtils.copyNonNullValues(movimiento, oldMovimiento);
-		setCalculatedSaldo(oldMovimiento, true);
+		updateSaldo(oldMovimiento, true);
 		return movimientoRepository.save(oldMovimiento);
 	}
 
@@ -140,11 +139,22 @@ public class MovimientoService {
 				: movimientoRepository.findFirstByCuentaId(cuentaId, Sort.by(orderBys)));
 	}
 
-	private void setCalculatedSaldo(Movimiento movimiento) {
-		setCalculatedSaldo(movimiento, false);
+	private void setDefaultValues(Movimiento movimiento) {
+		setDefaultValues(movimiento, null);
 	}
 
-	private void setCalculatedSaldo(Movimiento movimiento, boolean excludeItself) {
+	private void setDefaultValues(Movimiento movimiento, Long movimientoId) {
+		movimiento.setMovimientoId(movimientoId);
+		if (movimiento.getFecha() == null) {
+			movimiento.setFecha(new Date(System.currentTimeMillis()));
+		}
+	}
+
+	private void updateSaldo(Movimiento movimiento) {
+		updateSaldo(movimiento, false);
+	}
+
+	private void updateSaldo(Movimiento movimiento, boolean excludeItself) {
 		Long cuentaId = movimiento.getCuentaId();
 		Movimiento latest = excludeItself ? findLatestByCuentaId(cuentaId, movimiento.getMovimientoId()).orElse(null)
 				: findLatestByCuentaId(cuentaId).orElse(null);

@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Movimiento {
@@ -24,10 +25,9 @@ public class Movimiento {
 	@ManyToOne(targetEntity = Cuenta.class, optional = false)
 	private Long cuentaId;
 
-	@NotBlank(message = "El campo Fecha es obligatorio")
 	@Column(nullable = false)
 	private Date fecha;
-	@NotBlank(message = "El campo TipoMovimiento es obligatorio")
+	@NotNull(message = "El campo TipoMovimiento es obligatorio")
 	@Column(nullable = false)
 	private TipoMovimiento tipoMovimiento;
 	@NotBlank(message = "El campo Valor es obligatorio")
