@@ -10,9 +10,9 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
 	public Iterable<Cuenta> findAllByClienteId(Long clienteId);
 
-	public Optional<Cuenta> findByNumeroCuenta(Integer numeroCuenta);
+	public Optional<Cuenta> findByNumeroCuenta(Long numeroCuenta);
 
-	public boolean existsByNumeroCuenta(Integer numeroCuenta);
+	public boolean existsByNumeroCuenta(Long numeroCuenta);
 
-	public void deleteByNumeroCuenta(Integer numeroCuenta);
+	public void deleteByNumeroCuenta(Long numeroCuenta);
 }

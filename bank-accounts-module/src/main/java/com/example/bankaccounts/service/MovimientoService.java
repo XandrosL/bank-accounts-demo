@@ -51,11 +51,11 @@ public class MovimientoService {
 		return movimientoRepository.findAllByCuentaId(cuentaId, PageRequest.of(page, size, sort));
 	}
 
-	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size) {
+	public Page<Movimiento> findAllByNumeroCuenta(Long numeroCuenta, int page, int size) {
 		return findAllByNumeroCuenta(numeroCuenta, page, size, Sort.unsorted());
 	}
 
-	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size, Sort sort) {
+	public Page<Movimiento> findAllByNumeroCuenta(Long numeroCuenta, int page, int size, Sort sort) {
 		return movimientoRepository.findAllByCuentaId(cuentaService.findByNumeroCuenta(numeroCuenta).getCuentaId(),
 				PageRequest.of(page, size, sort));
 	}

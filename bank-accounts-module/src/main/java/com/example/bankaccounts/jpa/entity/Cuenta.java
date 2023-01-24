@@ -28,7 +28,7 @@ public class Cuenta {
 	// funcionalidad nativa, se debe especifar el DDL
 	@NotNull(message = "El campo NumeroCuenta es obligatorio")
 	@Column(nullable = false, unique = true)
-	private Integer numeroCuenta;
+	private Long numeroCuenta;
 	@NotNull(message = "El campo TipoCuenta es obligatorio")
 	@Column(nullable = false)
 	private TipoCuenta tipoCuenta;
@@ -76,11 +76,11 @@ public class Cuenta {
 		this.clienteId = clienteId;
 	}
 
-	public Integer getNumeroCuenta() {
+	public Long getNumeroCuenta() {
 		return numeroCuenta;
 	}
 
-	public void setNumeroCuenta(Integer numeroCuenta) {
+	public void setNumeroCuenta(Long numeroCuenta) {
 		this.numeroCuenta = numeroCuenta;
 	}
 

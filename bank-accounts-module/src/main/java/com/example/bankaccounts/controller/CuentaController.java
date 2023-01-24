@@ -50,7 +50,7 @@ public class CuentaController {
 	}
 
 	@GetMapping("/numero-cuenta/{numeroCuenta}")
-	public ResponseEntity<Cuenta> getCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta) {
+	public ResponseEntity<Cuenta> getCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Long numeroCuenta) {
 		return new ResponseEntity<>(service.findByNumeroCuenta(numeroCuenta), HttpStatus.OK);
 	}
 
@@ -69,7 +69,7 @@ public class CuentaController {
 	}
 
 	@PutMapping("/numero-cuenta/{numeroCuenta}")
-	public ResponseEntity<Cuenta> putCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
+	public ResponseEntity<Cuenta> putCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Long numeroCuenta,
 			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.replaceByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
@@ -81,7 +81,7 @@ public class CuentaController {
 	}
 
 	@PatchMapping("/numero-cuenta/{numeroCuenta}")
-	public ResponseEntity<Cuenta> patchClienteByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
+	public ResponseEntity<Cuenta> patchClienteByNumeroCuenta(@PathVariable("numeroCuenta") Long numeroCuenta,
 			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
@@ -93,7 +93,7 @@ public class CuentaController {
 	}
 
 	@DeleteMapping("/numero-cuenta/{numeroCuenta}")
-	public ResponseEntity<Cuenta> deleteCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta) {
+	public ResponseEntity<Cuenta> deleteCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Long numeroCuenta) {
 		service.deleteByNumeroCuenta(numeroCuenta);
 		return ResponseEntity.noContent().build();
 	}

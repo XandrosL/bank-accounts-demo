@@ -57,7 +57,7 @@ public class CuentaService {
 				.orElseThrow(() -> new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_ID_INVALIDO));
 	}
 
-	public Cuenta findByNumeroCuenta(Integer numeroCuenta) {
+	public Cuenta findByNumeroCuenta(Long numeroCuenta) {
 		return repository.findByNumeroCuenta(numeroCuenta)
 				.orElseThrow(() -> new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_NUMERO_DE_CUENTA_INVALIDO));
 	}
@@ -82,7 +82,7 @@ public class CuentaService {
 		return repository.save(cuenta);
 	}
 
-	public Cuenta replaceByNumeroCuenta(Integer numeroCuenta, Cuenta cuenta) {
+	public Cuenta replaceByNumeroCuenta(Long numeroCuenta, Cuenta cuenta) {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
@@ -105,7 +105,7 @@ public class CuentaService {
 		return repository.save(oldCuenta);
 	}
 
-	public Cuenta modifyByNumeroCuenta(Integer numeroCuenta, Cuenta cuenta) {
+	public Cuenta modifyByNumeroCuenta(Long numeroCuenta, Cuenta cuenta) {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
@@ -122,7 +122,7 @@ public class CuentaService {
 		repository.deleteById(cuentaId);
 	}
 
-	public void deleteByNumeroCuenta(Integer numeroCuenta) {
+	public void deleteByNumeroCuenta(Long numeroCuenta) {
 		validateExistingMovimientos(findByNumeroCuenta(numeroCuenta));
 		repository.deleteByNumeroCuenta(numeroCuenta);
 	}

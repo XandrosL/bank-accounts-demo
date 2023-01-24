@@ -9,7 +9,7 @@ public class ReporteDTO implements Serializable {
 
 	private Date fecha;
 	private String cliente;
-	private Integer numeroCuenta;
+	private Long numeroCuenta;
 	private String tipo;
 	private Double saldoInicial;
 	private Boolean estado;
@@ -32,11 +32,11 @@ public class ReporteDTO implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Integer getNumeroCuenta() {
+	public Long getNumeroCuenta() {
 		return numeroCuenta;
 	}
 
-	public void setNumeroCuenta(Integer numeroCuenta) {
+	public void setNumeroCuenta(Long numeroCuenta) {
 		this.numeroCuenta = numeroCuenta;
 	}
 

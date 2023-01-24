@@ -46,7 +46,7 @@ public class MovimientoController {
 
 	@GetMapping("/numero-cuenta/{numeroCuenta}")
 	public ResponseEntity<Iterable<Movimiento>> getMovimientosByNumeroCuenta(
-			@PathVariable("numeroCuenta") Integer numeroCuenta, @RequestParam(defaultValue = "0") Integer page,
+			@PathVariable("numeroCuenta") Long numeroCuenta, @RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "20") Integer size, @RequestParam(defaultValue = "false") Boolean details) {
 
 		Page<Movimiento> movimientos = service.findAllByNumeroCuenta(numeroCuenta, page, size);
