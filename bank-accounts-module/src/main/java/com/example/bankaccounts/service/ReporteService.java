@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import com.example.bankaccounts.jpa.entity.Cuenta;
 import com.example.bankaccounts.jpa.entity.Movimiento;
 import com.example.bankaccounts.jpa.entity.Movimiento.TipoMovimiento;
 
+@Service
 public class ReporteService {
 
 	@Autowired
@@ -43,7 +45,7 @@ public class ReporteService {
 
 		Iterable<Cuenta> cuentas = cuentaService.findAllByClienteId(cliente.getClienteId());
 		cuentas.forEach(cuenta -> {
-			Iterable<Movimiento> movimientos = movimientoService.findAllByCuentaIdAndByFechaBetween(clienteId,
+			Iterable<Movimiento> movimientos = movimientoService.findAllByCuentaIdAndFechaBetween(clienteId,
 					fechaInicio, fechaFin);
 			movimientos.forEach(movimiento -> {
 				ReporteDTO reporteDTO = new ReporteDTO();

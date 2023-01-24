@@ -60,8 +60,8 @@ public class MovimientoService {
 				PageRequest.of(page, size, sort));
 	}
 
-	public Iterable<Movimiento> findAllByCuentaIdAndByFechaBetween(Long cuentaId, Date startDate, Date endDate) {
-		return movimientoRepository.findAllByCuentaIdAndByFechaBetween(cuentaId, startDate, endDate);
+	public Iterable<Movimiento> findAllByCuentaIdAndFechaBetween(Long cuentaId, Date startDate, Date endDate) {
+		return movimientoRepository.findAllByCuentaIdAndFechaBetween(cuentaId, startDate, endDate);
 	}
 
 	public Movimiento findById(Long movimientoId) {

@@ -14,7 +14,7 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
 	public Page<Movimiento> findAllByCuentaId(Long cuentaId, Pageable pageable);
 
-	public Iterable<Movimiento> findAllByCuentaIdAndByFechaBetween(Long cuentaId, Date startDate, Date endDate);
+	public Iterable<Movimiento> findAllByCuentaIdAndFechaBetween(Long cuentaId, Date startDate, Date endDate);
 
 	public boolean existsByCuentaId(Long cuentaId);
 
