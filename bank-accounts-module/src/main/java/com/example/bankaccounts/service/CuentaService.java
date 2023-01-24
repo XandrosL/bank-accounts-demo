@@ -45,6 +45,10 @@ public class CuentaService {
 		return repository.findAll(PageRequest.of(page, size, sort));
 	}
 
+	public Iterable<Cuenta> findAllByClienteId(Long clienteId) {
+		return repository.findAllByClienteId(clienteId);
+	}
+
 	public Cuenta findById(Long cuentaId) {
 		return repository.findById(cuentaId)
 				.orElseThrow(() -> new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_ID_INVALIDO));

@@ -1,5 +1,6 @@
 package com.example.bankaccounts.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,10 @@ public class MovimientoService {
 	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size, Sort sort) {
 		return movimientoRepository.findAllByCuentaId(cuentaService.findByNumeroCuenta(numeroCuenta).getCuentaId(),
 				PageRequest.of(page, size, sort));
+	}
+
+	public Iterable<Movimiento> findAllByCuentaIdAndByFechaBetween(Long cuentaId, Date startDate, Date endDate) {
+		return movimientoRepository.findAllByCuentaIdAndByFechaBetween(cuentaId, startDate, endDate);
 	}
 
 	public Movimiento findById(Long movimientoId) {
@@ -154,7 +159,7 @@ public class MovimientoService {
 			throw new IllegalArgumentException(SALDO_NO_DISPONIBLE);
 		}
 	}
-	
+
 	private void validateCuentaEstado(Movimiento movimiento) {
 		if (Boolean.FALSE.equals(cuentaService.findById(movimiento.getCuentaId()).getEstado())) {
 			throw new IllegalArgumentException(CUENTA_INACTIVA);

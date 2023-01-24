@@ -8,6 +8,8 @@ import com.example.bankaccounts.jpa.entity.Cuenta;
 
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
+	public Iterable<Cuenta> findAllByClienteId(Long clienteId);
+
 	public Optional<Cuenta> findByNumeroCuenta(Integer numeroCuenta);
 
 	public boolean existsByNumeroCuenta(Integer numeroCuenta);
