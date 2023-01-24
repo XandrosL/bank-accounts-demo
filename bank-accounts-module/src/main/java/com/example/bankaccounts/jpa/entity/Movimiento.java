@@ -13,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -37,7 +36,7 @@ public class Movimiento {
 	@NotNull(message = "El campo TipoMovimiento es obligatorio")
 	@Column(nullable = false)
 	private TipoMovimiento tipoMovimiento;
-	@NotBlank(message = "El campo Valor es obligatorio")
+	@NotNull(message = "El campo Valor es obligatorio")
 	@Column(nullable = false)
 	private Double valor;
 	@Column(nullable = false)

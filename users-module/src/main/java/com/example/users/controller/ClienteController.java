@@ -45,7 +45,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/identificacion/{identificacion}")
-	public ResponseEntity<Cliente> getClienteByIdentificacion(@PathVariable("identificacion") Integer identificacion) {
+	public ResponseEntity<Cliente> getClienteByIdentificacion(@PathVariable("identificacion") Long identificacion) {
 		return new ResponseEntity<>(service.findByIdentificacion(identificacion), HttpStatus.OK);
 	}
 
@@ -64,20 +64,20 @@ public class ClienteController {
 	}
 
 	@PutMapping("/identificacion/{identificacion}")
-	public ResponseEntity<Cliente> putClienteByIdentificacion(@PathVariable("identificacion") Integer clienteId,
+	public ResponseEntity<Cliente> putClienteByIdentificacion(@PathVariable("identificacion") Long clienteId,
 			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.replaceByIdentificacion(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PatchMapping("/{clienteId}")
 	public ResponseEntity<Cliente> patchClienteById(@PathVariable("clienteId") Long clienteId,
-			@RequestBody Cliente cliente) {
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyById(clienteId, cliente), HttpStatus.OK);
 	}
 
 	@PatchMapping("/identificacion/{identificacion}")
-	public ResponseEntity<Cliente> patchClienteByIdentificacion(@PathVariable("identificacion") Integer identificacion,
-			@RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> patchClienteByIdentificacion(@PathVariable("identificacion") Long identificacion,
+			@Valid @RequestBody Cliente cliente) {
 		return new ResponseEntity<>(service.modifyByIdentificacion(identificacion, cliente), HttpStatus.OK);
 	}
 
@@ -88,8 +88,7 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/identificacion/{identificacion}")
-	public ResponseEntity<Cliente> deleteClienteByIdentificacion(
-			@PathVariable("identificacion") Integer identificacion) {
+	public ResponseEntity<Cliente> deleteClienteByIdentificacion(@PathVariable("identificacion") Long identificacion) {
 		service.deleteByIdentificacion(identificacion);
 		return ResponseEntity.noContent().build();
 	}

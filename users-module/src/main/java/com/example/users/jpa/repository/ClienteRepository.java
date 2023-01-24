@@ -8,9 +8,9 @@ import com.example.users.jpa.entity.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-	public Optional<Cliente> findByIdentificacion(Integer identificacion);
+	public Optional<Cliente> findByIdentificacion(Long identificacion);
 
-	public boolean existsByIdentificacion(Integer identificacion);
+	public boolean existsByIdentificacion(Long identificacion);
 
-	public void deleteByIdentificacion(Integer identificacion);
+	public void deleteByIdentificacion(Long identificacion);
 }

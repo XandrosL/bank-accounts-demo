@@ -60,7 +60,7 @@ class ClienteControllerTest {
 		cliente.setEdad(30);
 		cliente.setEstado(true);
 		cliente.setGenero(Genero.M);
-		cliente.setIdentificacion(123456789);
+		cliente.setIdentificacion(123456789L);
 		cliente.setNombre("Cliente Prueba");
 		cliente.setTelefono(999999999);
 	}
@@ -95,7 +95,7 @@ class ClienteControllerTest {
 	@Test
 	void testPostCliente() throws Exception {
 		cliente.setNombre("Cliente Prueba Post");
-		cliente.setIdentificacion(222222222);
+		cliente.setIdentificacion(222222222L);
 		Mockito.when(service.create(Mockito.any(Cliente.class))).thenReturn(cliente);
 		RequestBuilder request = MockMvcRequestBuilders.post("/clientes").accept(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(cliente)).contentType(MediaType.APPLICATION_JSON);

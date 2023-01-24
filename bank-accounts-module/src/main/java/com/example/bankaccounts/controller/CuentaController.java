@@ -39,13 +39,18 @@ public class CuentaController {
 				: new ResponseEntity<>(cuentas.getContent(), HttpStatus.OK));
 	}
 
+	@GetMapping("/cliente/{clienteId}")
+	public ResponseEntity<Iterable<Cuenta>> getCuentasByClienteId(@PathVariable("clienteId") Long clienteId) {
+		return new ResponseEntity<>(service.findAllByClienteId(clienteId), HttpStatus.OK);
+	}
+
 	@GetMapping("/{cuentaId}")
 	public ResponseEntity<Cuenta> getCuentaById(@PathVariable("cuentaId") Long cuentaId) {
 		return new ResponseEntity<>(service.findById(cuentaId), HttpStatus.OK);
 	}
 
 	@GetMapping("/numero-cuenta/{numeroCuenta}")
-	public ResponseEntity<Cuenta> getClienteByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta) {
+	public ResponseEntity<Cuenta> getCuentaByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta) {
 		return new ResponseEntity<>(service.findByNumeroCuenta(numeroCuenta), HttpStatus.OK);
 	}
 
@@ -70,13 +75,14 @@ public class CuentaController {
 	}
 
 	@PatchMapping("/{cuentaId}")
-	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId, @RequestBody Cuenta cuenta) {
+	public ResponseEntity<Cuenta> patchCuentaById(@PathVariable("cuentaId") Long cuentaId,
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyById(cuentaId, cuenta), HttpStatus.OK);
 	}
 
 	@PatchMapping("/numero-cuenta/{numeroCuenta}")
 	public ResponseEntity<Cuenta> patchClienteByNumeroCuenta(@PathVariable("numeroCuenta") Integer numeroCuenta,
-			@RequestBody Cuenta cuenta) {
+			@Valid @RequestBody Cuenta cuenta) {
 		return new ResponseEntity<>(service.modifyByNumeroCuenta(numeroCuenta, cuenta), HttpStatus.OK);
 	}
 

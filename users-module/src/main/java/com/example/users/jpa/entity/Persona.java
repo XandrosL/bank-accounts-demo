@@ -20,7 +20,7 @@ public class Persona {
 	private Integer edad;
 	@NotNull(message = "El campo Identificación es obligatorio")
 	@Column(nullable = false, unique = true)
-	private Integer identificacion;
+	private Long identificacion;
 	@NotBlank(message = "El campo Dirección es obligatorio")
 	@Column(nullable = false)
 	private String direccion;
@@ -71,11 +71,11 @@ public class Persona {
 		this.edad = edad;
 	}
 
-	public Integer getIdentificacion() {
+	public Long getIdentificacion() {
 		return identificacion;
 	}
 
-	public void setIdentificacion(Integer identificacion) {
+	public void setIdentificacion(Long identificacion) {
 		this.identificacion = identificacion;
 	}
 

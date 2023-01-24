@@ -1,5 +1,6 @@
 package com.example.users.config;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +12,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.example.users.exception.ForbiddenOperationException;
 import com.example.users.exception.ResourceNotFoundException;
 
 import jakarta.validation.ConstraintViolationException;
@@ -21,14 +24,17 @@ import jakarta.validation.ConstraintViolationException;
 @ControllerAdvice
 public class UsersExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler({ IllegalArgumentException.class, ResourceNotFoundException.class })
+	@ExceptionHandler({ IllegalArgumentException.class, ResourceNotFoundException.class,
+			ForbiddenOperationException.class, HttpClientErrorException.class })
 	protected ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-		if (ex instanceof IllegalArgumentException) {
+		if (ex instanceof IllegalArgumentException || ex instanceof HttpClientErrorException) {
 			statusCode = HttpStatus.BAD_REQUEST;
 		} else if (ex instanceof ResourceNotFoundException) {
 			statusCode = HttpStatus.NOT_FOUND;
+		} else if (ex instanceof ForbiddenOperationException) {
+			statusCode = HttpStatus.FORBIDDEN;
 		}
 		return handleExceptionInternal(ex, ex.getLocalizedMessage(), headers, statusCode, request);
 	}
@@ -44,6 +50,15 @@ public class UsersExceptionHandler extends ResponseEntityExceptionHandler {
 			errors.put(fieldName, errorMessage);
 		});
 		return handleExceptionInternal(ex, errors, headers, statusCode, request);
+	}
+
+	@ExceptionHandler(ConnectException.class)
+	protected ResponseEntity<Object> handleConnect(ConnectException ex, WebRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		return handleExceptionInternal(ex,
+				"Could not connect to depended service:" + System.lineSeparator() + ex.getLocalizedMessage(), headers,
+				statusCode, request);
 	}
 
 	@Override

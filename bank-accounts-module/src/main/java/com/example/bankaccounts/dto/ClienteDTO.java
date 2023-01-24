@@ -12,7 +12,7 @@ public class ClienteDTO implements Serializable {
 	private String nombre;
 	private Genero genero;
 	private Integer edad;
-	private Integer identificacion;
+	private Long identificacion;
 	private String direccion;
 	private Integer telefono;
 
@@ -75,11 +75,11 @@ public class ClienteDTO implements Serializable {
 		this.edad = edad;
 	}
 
-	public Integer getIdentificacion() {
+	public Long getIdentificacion() {
 		return identificacion;
 	}
 
-	public void setIdentificacion(Integer identificacion) {
+	public void setIdentificacion(Long identificacion) {
 		this.identificacion = identificacion;
 	}
 

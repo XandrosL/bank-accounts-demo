@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -24,11 +25,11 @@ import jakarta.validation.ConstraintViolationException;
 public class BankAccountsExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ IllegalArgumentException.class, ResourceNotFoundException.class,
-			ForbiddenOperationException.class })
+			ForbiddenOperationException.class, HttpClientErrorException.class })
 	protected ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
 		HttpHeaders headers = new HttpHeaders();
 		HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-		if (ex instanceof IllegalArgumentException) {
+		if (ex instanceof IllegalArgumentException || ex instanceof HttpClientErrorException) {
 			statusCode = HttpStatus.BAD_REQUEST;
 		} else if (ex instanceof ResourceNotFoundException) {
 			statusCode = HttpStatus.NOT_FOUND;

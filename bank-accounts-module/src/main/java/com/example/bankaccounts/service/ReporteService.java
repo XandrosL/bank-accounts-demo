@@ -25,6 +25,8 @@ public class ReporteService {
 	@Autowired
 	private CuentaService cuentaService;
 	@Autowired
+	private MovimientoService movimientoService;
+	@Autowired
 	private RestTemplate restTemplate;
 
 	@Value("${users-module.clients.url}")
@@ -43,7 +45,8 @@ public class ReporteService {
 
 		Iterable<Cuenta> cuentas = cuentaService.findAllByClienteId(cliente.getClienteId());
 		cuentas.forEach(cuenta -> {
-			Iterable<Movimiento> movimientos = cuenta.getMovimientos();
+			Iterable<Movimiento> movimientos = movimientoService.findAllByCuentaIdAndFechaBetween(cuenta.getCuentaId(),
+					fechaInicio, fechaFin);
 			movimientos.forEach(movimiento -> {
 				ReporteDTO reporteDTO = new ReporteDTO();
 				reporteDTO.setFecha(movimiento.getFecha());

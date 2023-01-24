@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.bankaccounts.dto.ClienteDTO;
+import com.example.bankaccounts.exception.ForbiddenOperationException;
 import com.example.bankaccounts.exception.ResourceNotFoundException;
 import com.example.bankaccounts.jpa.entity.Cuenta;
 import com.example.bankaccounts.jpa.repository.CuentaRepository;
@@ -25,8 +26,10 @@ public class CuentaService {
 	private static final String CUENTA_INVALIDA = "Cuenta inválida";
 	private static final String CUENTA_NO_ENCONTRADA_O_ID_INVALIDO = "Cuenta no encontrada o ID inválido";
 	private static final String CUENTA_NO_ENCONTRADA_O_NUMERO_DE_CUENTA_INVALIDO = "Cuenta no encontrada o numero de cuenta inválido";
+	private static final String NO_SE_PERMITE_ALTERAR_UNA_CUENTA_CON_MOVIMIENTOS = "No se permite alterar una cuenta con movimientos";
 	private static final String CLIENTE_INVALIDO = "Cliente Inválido";
 	private static final String CLIENTE_EN_ESTADO_INACTIVO = "Cliente en estado Inactivo";
+	private static final String NO_FUE_POSIBLE_HALLAR_EL_CLIENTE_DE_LA_CUENTA = "No fue posible hallar el cliente de la cuenta";
 
 	@Autowired
 	private CuentaRepository repository;
@@ -72,7 +75,9 @@ public class CuentaService {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
-		setDefaultValues(cuenta, findById(cuentaId).getCuentaId());
+		Cuenta oldCuenta = findById(cuentaId);
+		validateExistingMovimientos(oldCuenta);
+		setDefaultValues(cuenta, oldCuenta.getCuentaId());
 		validateClienteEstado(cuenta);
 		return repository.save(cuenta);
 	}
@@ -81,7 +86,9 @@ public class CuentaService {
 		if (cuenta == null) {
 			throw new IllegalArgumentException(CUENTA_INVALIDA);
 		}
-		setDefaultValues(cuenta, findByNumeroCuenta(numeroCuenta).getCuentaId());
+		Cuenta oldCuenta = findByNumeroCuenta(numeroCuenta);
+		validateExistingMovimientos(oldCuenta);
+		setDefaultValues(cuenta, oldCuenta.getCuentaId());
 		validateClienteEstado(cuenta);
 		return repository.save(cuenta);
 	}
@@ -92,6 +99,7 @@ public class CuentaService {
 		}
 		cuenta.setCuentaId(null);
 		Cuenta oldCuenta = findById(cuentaId);
+		validateExistingMovimientos(oldCuenta);
 		BankAccountsUtils.copyNonNullValues(cuenta, oldCuenta);
 		validateClienteEstado(oldCuenta);
 		return repository.save(oldCuenta);
@@ -103,22 +111,19 @@ public class CuentaService {
 		}
 		cuenta.setCuentaId(null);
 		Cuenta oldCuenta = findByNumeroCuenta(numeroCuenta);
+		validateExistingMovimientos(oldCuenta);
 		BankAccountsUtils.copyNonNullValues(cuenta, oldCuenta);
 		validateClienteEstado(oldCuenta);
 		return repository.save(oldCuenta);
 	}
 
 	public void deleteById(Long cuentaId) {
-		if (!repository.existsById(cuentaId)) {
-			throw new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_ID_INVALIDO);
-		}
+		validateExistingMovimientos(findById(cuentaId));
 		repository.deleteById(cuentaId);
 	}
 
 	public void deleteByNumeroCuenta(Integer numeroCuenta) {
-		if (repository.existsByNumeroCuenta(numeroCuenta)) {
-			throw new ResourceNotFoundException(CUENTA_NO_ENCONTRADA_O_NUMERO_DE_CUENTA_INVALIDO);
-		}
+		validateExistingMovimientos(findByNumeroCuenta(numeroCuenta));
 		repository.deleteByNumeroCuenta(numeroCuenta);
 	}
 
@@ -143,7 +148,13 @@ public class CuentaService {
 		if (response.getStatusCode().is2xxSuccessful()) {
 			return response.getBody();
 		} else {
-			throw new RestClientException("No fue posible hallar el cliente");
+			throw new RestClientException(NO_FUE_POSIBLE_HALLAR_EL_CLIENTE_DE_LA_CUENTA);
+		}
+	}
+
+	private void validateExistingMovimientos(Cuenta oldCuenta) {
+		if (oldCuenta.getMovimientos() != null && !oldCuenta.getMovimientos().isEmpty()) {
+			throw new ForbiddenOperationException(NO_SE_PERMITE_ALTERAR_UNA_CUENTA_CON_MOVIMIENTOS);
 		}
 	}
 

@@ -28,7 +28,7 @@ public class MovimientoService {
 	private static final String MOVIMIENTO_NO_ENCONTRADO_O_ID_INVALIDO = "Movimiento no encontrado o ID inválido";
 	private static final String NO_HAY_MOVIMIENTOS_O_ID_DE_CUENTA_INVALIDO = "No hay movimientos o ID de cuenta inválido";
 	private static final String DEBE_SER_EL_MOVIMIENTO_MAS_RECIENTE_DE_UNA_CUENTA = "Solo se permite modificar o eliminar el movimiento más reciente de una cuenta";
-	private static final String CUENTA_INACTIVA = "Cuenta en estado Inactiva";
+	private static final String CUENTA_EN_ESTADO_INACTIVO = "Cuenta en estado Inactivo";
 
 	@Autowired
 	private MovimientoRepository movimientoRepository;
@@ -52,7 +52,7 @@ public class MovimientoService {
 	}
 
 	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size) {
-		return findAllByNumeroCuenta(numeroCuenta, page, size, null);
+		return findAllByNumeroCuenta(numeroCuenta, page, size, Sort.unsorted());
 	}
 
 	public Page<Movimiento> findAllByNumeroCuenta(Integer numeroCuenta, int page, int size, Sort sort) {
@@ -172,7 +172,7 @@ public class MovimientoService {
 
 	private void validateCuentaEstado(Movimiento movimiento) {
 		if (Boolean.FALSE.equals(cuentaService.findById(movimiento.getCuentaId()).getEstado())) {
-			throw new IllegalArgumentException(CUENTA_INACTIVA);
+			throw new ForbiddenOperationException(CUENTA_EN_ESTADO_INACTIVO);
 		}
 	}
 }

@@ -12,6 +12,8 @@ INSERT INTO cuenta (cliente_id, numero_cuenta, tipo_cuenta, saldo_inicial, estad
 VALUES (2, 1000020, 'A', 5000, true);
 INSERT INTO cuenta (cliente_id, numero_cuenta, tipo_cuenta, saldo_inicial, estado)
 VALUES (3, 1000300, 'A', 100, false);
+INSERT INTO cuenta (cliente_id, numero_cuenta, tipo_cuenta, saldo_inicial, estado)
+VALUES (3, 1000301, 'C', 100, true);
 
 INSERT INTO movimiento (cuenta_id, fecha, tipo_movimiento, valor, saldo)
 VALUES (1, '2023-01-01', 'D', 1200, 2200);
@@ -32,3 +34,6 @@ INSERT INTO movimiento (cuenta_id, fecha, tipo_movimiento, valor, saldo)
 VALUES (4, '2022-04-01', 'D', 200, 300);
 INSERT INTO movimiento (cuenta_id, fecha, tipo_movimiento, valor, saldo)
 VALUES (4, '2022-06-01', 'R', 150, 150);
+
+INSERT INTO movimiento (cuenta_id, fecha, tipo_movimiento, valor, saldo)
+VALUES (5, '2022-06-01', 'D', 150, 250);
