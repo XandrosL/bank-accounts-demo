@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
+//TODO Could move to a third, new "common" module and add as dependency of all modules to reuse code.
 public class BankAccountsUtils {
 
 	private BankAccountsUtils() {

@@ -1,5 +1,6 @@
 package com.example.bankaccounts.exception;
 
+//TODO Could move to a third, new "common" module and add as dependency of all modules to reuse code.
 public class ResourceNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = -4497863459451468498L;

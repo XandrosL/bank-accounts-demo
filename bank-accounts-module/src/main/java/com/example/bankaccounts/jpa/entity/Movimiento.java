@@ -3,6 +3,7 @@ package com.example.bankaccounts.jpa.entity;
 import java.sql.Date;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,8 +23,13 @@ public class Movimiento {
 	@JsonProperty(index = 0)
 	private Long movimientoId;
 
-	@NotBlank(message = "El campo CuentaId es obligatorio")
-	@ManyToOne(targetEntity = Cuenta.class, optional = false)
+	@JsonIgnore
+	@JoinColumn(name = "cuenta_id", insertable = false, updatable = false)
+	@ManyToOne(targetEntity = Cuenta.class)
+	private Cuenta cuenta;
+
+	@NotNull(message = "El campo CuentaId es obligatorio")
+	@Column(name = "cuenta_id", nullable = false)
 	private Long cuentaId;
 
 	@Column(nullable = false)
@@ -61,6 +68,14 @@ public class Movimiento {
 
 	public void setMovimientoId(Long movimientoId) {
 		this.movimientoId = movimientoId;
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
 	}
 
 	public Long getCuentaId() {

@@ -1,4 +1,4 @@
-package com.example.users.controller;
+package com.example.users.config;
 
 import java.util.HashMap;
 import java.util.Map;

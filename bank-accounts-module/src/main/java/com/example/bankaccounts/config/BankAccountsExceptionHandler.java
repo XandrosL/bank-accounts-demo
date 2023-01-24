@@ -1,5 +1,6 @@
-package com.example.bankaccounts.controller;
+package com.example.bankaccounts.config;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,15 @@ public class BankAccountsExceptionHandler extends ResponseEntityExceptionHandler
 			errors.put(fieldName, errorMessage);
 		});
 		return handleExceptionInternal(ex, errors, headers, statusCode, request);
+	}
+
+	@ExceptionHandler(ConnectException.class)
+	protected ResponseEntity<Object> handleConnect(ConnectException ex, WebRequest request) {
+		HttpHeaders headers = new HttpHeaders();
+		HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+		return handleExceptionInternal(ex,
+				"Could not connect to depended service:" + System.lineSeparator() + ex.getLocalizedMessage(), headers,
+				statusCode, request);
 	}
 
 	@Override
