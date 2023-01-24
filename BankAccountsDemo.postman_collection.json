@@ -79,7 +79,7 @@
 							"response": []
 						},
 						{
-							"name": "GET Cliente By clienteId",
+							"name": "GET Cliente by clienteId",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -99,7 +99,7 @@
 							"response": []
 						},
 						{
-							"name": "GET Cliente By clienteId (Id Inválido)",
+							"name": "GET Cliente by clienteId (id Inválido)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -119,7 +119,7 @@
 							"response": []
 						},
 						{
-							"name": "GET Cliente By identificacion",
+							"name": "GET Cliente by identificacion",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -140,7 +140,7 @@
 							"response": []
 						},
 						{
-							"name": "GET Cliente By identificacion (identificación inválida)",
+							"name": "GET Cliente by identificacion (identificación inválida)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -246,6 +246,35 @@
 							"response": []
 						},
 						{
+							"name": "PUT Cliente (id inválido)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 30,\n    \"genero\": \"M\",\n    \"identificacion\": 123456,\n    \"direccion\": \"Cuenca\",\n    \"telefono\": 88888888\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "PUT Cliente (campos inválidos)",
 							"request": {
 								"method": "PUT",
@@ -304,7 +333,7 @@
 							"response": []
 						},
 						{
-							"name": "PATCH Cliente (dirección inválida)",
+							"name": "PATCH Cliente (campos inválidos)",
 							"request": {
 								"method": "PATCH",
 								"header": [],
@@ -339,7 +368,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"contraseña\": \"123456\",\n    \"estado\": true,\n    \"nombre\": \"Cliente Prueba\",\n    \"edad\": 32,\n    \"identificacion\": 123456,\n    \"Telefono\": 999999999\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -347,7 +376,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/2",
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/4",
 									"host": [
 										"{{servidor}}"
 									],
@@ -355,7 +384,36 @@
 									"path": [
 										"api",
 										"clientes",
-										"2"
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Cliente (usuario con cuentas)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-users-module}}/api/clientes/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-users-module}}",
+									"path": [
+										"api",
+										"clientes",
+										"1"
 									]
 								}
 							},
@@ -399,6 +457,121 @@
 											"key": "details",
 											"value": "false"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cuentas (detalles de paginación)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas?page=0&size=20&details=true",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cuenta by cuentaId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cuenta by cuentaId (id inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cuenta by numeroCuenta",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/numero-cuenta/1000001",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"numero-cuenta",
+										"1000001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Cuenta by numeroCuenta (numeroCuenta inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/numero-cuenta/-1000001",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"numero-cuenta",
+										"-1000001"
 									]
 								}
 							},
@@ -459,16 +632,811 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "POST Cuenta (cliente inactivo)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 3,\n    \"numeroCuenta\": 4000001,\n    \"tipoCuenta\": \"A\",\n    \"saldoInicial\": 7000.7,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 2,\n    \"numeroCuenta\": 1000020,\n    \"tipoCuenta\": \"C\",\n    \"saldoInicial\": 6000.0,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/3",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Cuenta (id inválido)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 2,\n    \"numeroCuenta\": 1000020,\n    \"tipoCuenta\": \"C\",\n    \"saldoInicial\": 6000.0,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Cuenta (campos inválidos)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 2,\n    \"numeroCuenta\": 1000020,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/3",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Cuenta (cuenta con movimientos)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"clienteId\": 1,\n    \"numeroCuenta\": 1000001,\n    \"tipoCuenta\": \"A\",\n    \"saldoInicial\": 1000.0,\n    \"estado\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Cuenta",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tipoCuenta\": \"A\",\n    \"saldoInicial\": 654.3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/3",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Cuenta (cuenta con movimientos)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tipoCuenta\": \"A\",\n    \"saldoInicial\": 654.3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Cuenta",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/5",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Cuenta (cuenta con movimientos)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/cuentas/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"cuentas",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
 				{
 					"name": "/movimientos",
-					"item": []
+					"item": [
+						{
+							"name": "GET movimientos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos?page=0&size=20&details=false",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET movimientos (detalles de paginación)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos?page=0&size=20&details=true",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET movimientos by numeroCuenta",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/numero-cuenta/1000001?page=0&size=20&details=false",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"numero-cuenta",
+										"1000001"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET movimientos by numeroCuenta (numeroCuenta inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/numero-cuenta/-100000?page=0&size=20&details=false",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"numero-cuenta",
+										"-100000"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "details",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET movimiento by movimientoId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET movimiento by movimientoId (id inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/-1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST movimiento",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 1,\n    \"fecha\": \"2023-01-24\",\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 1.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST movimiento (campos inválidos)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST movimiento (cuenta inactiva)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 4,\n    \"fecha\": \"2023-01-24\",\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 1.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT movimiento",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"fecha\": \"2023-01-24\",\n    \"tipoMovimiento\": \"R\",\n    \"valor\": 3500.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/6",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT movimiento (movimiento prohibido)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"fecha\": \"2023-01-24\",\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 3500.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/5",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH movimiento",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 100.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/6",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH movimiento (movimiento prohibido)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 100.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/5",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE movimiento",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 100.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/9",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE movimiento (movimiento prohibido)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 2,\n    \"tipoMovimiento\": \"D\",\n    \"valor\": 100.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos/1",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "/reportes",
-					"item": []
+					"item": [
+						{
+							"name": "GET reporte",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/reportes?clienteId=1&fechaInicio=2023-01-01&fechaFin=2023-01-24",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"reportes"
+									],
+									"query": [
+										{
+											"key": "clienteId",
+											"value": "1"
+										},
+										{
+											"key": "fechaInicio",
+											"value": "2023-01-01"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2023-01-24"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET reporte (rango de fechas reducido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/reportes?clienteId=1&fechaInicio=2023-01-07&fechaFin=2023-01-12",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"reportes"
+									],
+									"query": [
+										{
+											"key": "clienteId",
+											"value": "1"
+										},
+										{
+											"key": "fechaInicio",
+											"value": "2023-01-07"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2023-01-12"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET reporte (id inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/reportes?clienteId=-1&fechaInicio=2023-01-07&fechaFin=2023-01-12",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"reportes"
+									],
+									"query": [
+										{
+											"key": "clienteId",
+											"value": "-1"
+										},
+										{
+											"key": "fechaInicio",
+											"value": "2023-01-07"
+										},
+										{
+											"key": "fechaFin",
+											"value": "2023-01-12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
