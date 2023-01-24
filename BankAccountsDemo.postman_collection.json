@@ -1159,6 +1159,34 @@
 							"response": []
 						},
 						{
+							"name": "POST movimiento (saldo insuficiente)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cuentaId\": 1,\n    \"fecha\": \"2023-01-24\",\n    \"tipoMovimiento\": \"R\",\n    \"valor\": 1000000000.0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{servidor}}:{{puerto-bank-accounts-module}}/api/movimientos",
+									"host": [
+										"{{servidor}}"
+									],
+									"port": "{{puerto-bank-accounts-module}}",
+									"path": [
+										"api",
+										"movimientos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "PUT movimiento",
 							"request": {
 								"method": "PUT",
