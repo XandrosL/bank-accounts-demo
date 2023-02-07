@@ -16,7 +16,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.example.users.UsersModuleApplication</mainClass>
+							<mainClass>com.example.bankaccounts.BankAccountsModuleApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

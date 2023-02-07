@@ -1,0 +1,71 @@
+version: "3.7"
+services:
+  users-service:
+      build: users-module/
+      image: users-module
+      volumes: 
+        - /home/debian/docker/bank-accounts-demo-volume:/my-volumes/bank-accounts-demo-volume
+      expose:
+        - 8080
+      ports: 
+        - 8080:8080
+      depends_on:
+        postgresdb-users-service:
+          condition: service_healthy
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb-users-service:5432/users
+        - SPRING_DATASOURCE_USERNAME=demo
+        - SPRING_DATASOURCE_PASSWORD=demo
+        - SPRING_DATASOURCE_DRIVERCLASSNAME=org.postgresql.Driver
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+        - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+        
+  postgresdb-users-service:
+    image: postgres:13.1-alpine
+    container_name: postgresdb-users-module
+    ports: 
+      - 5433:5432
+    environment:
+      - POSTGRES_DB=users
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d users -U demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      
+  bank-accounts-service:
+    build: bank-accounts-module/
+    image: bank-accounts-module
+    volumes: 
+      - /home/debian/docker/bank-accounts-demo-volume:/my-volumes/bank-accounts-demo-volume
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    depends_on:
+      postgresdb-bank-accounts-service:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb-bank-accounts-service:5432/bank-accounts
+      - SPRING_DATASOURCE_USERNAME=demo
+      - SPRING_DATASOURCE_PASSWORD=demo
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.postgresql.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      
+  postgresdb-bank-accounts-service:
+    image: postgres:13.1-alpine
+    container_name: postgresdb-bank-accounts-module
+    ports: 
+      - 5434:5432
+    environment:
+      - POSTGRES_DB=bank-accounts
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d bank-accounts -U demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
